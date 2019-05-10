@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Documentation from '~/components/documentation';
-import Comment from '~/components/Comment';
 
 class Docs extends Component {
   state = {
@@ -8,7 +7,6 @@ class Docs extends Component {
   render() {
     return (
       <Documentation />
-      // <Documentation />
     );
   }
 }

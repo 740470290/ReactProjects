@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Comment extends Component {
+class TodoItem extends Component {
   state = {
   };
   render() {
@@ -11,4 +11,4 @@ class Comment extends Component {
 }
 
 
-export default Comment;
+export default TodoItem;
