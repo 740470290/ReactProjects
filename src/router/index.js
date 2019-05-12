@@ -1,22 +1,17 @@
 import React, {Component, Fragment} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {hot} from 'react-hot-loader';
+import {connect} from 'react-redux';
 import '../style/style.css';
-import TodoItem from '../components/TodoItem';
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      inputValue: '',
-      list: ['学React']
-    };
+    console.log(this.props);
   }
-
   handleChange(e) {
     this.setState({inputValue: this.refs.txt.value});
   }
-
   handleClick() {
     this.setState({list: [...this.state.list, this.state.inputValue], inputValue: ''});
   }
@@ -33,7 +28,7 @@ class TodoList extends Component {
         <form action="" onSubmit={(e) => { e.preventDefault(); }}>
           <input
             type="text"
-            value={this.state.inputValue}
+            value={this.props.inputValue}
             onChange={(e) => this.handleChange(e)}
             ref="txt"
           />
@@ -41,7 +36,7 @@ class TodoList extends Component {
         </form>
         <ul>
           {
-            this.state.list.map((item, index) =>
+            this.props.list.map((item, index) =>
               (<li key={index}>
                 {item}<a href="#" onClick={() => this.handleDelete(index)}>删除</a>
               </li>))
@@ -51,5 +46,6 @@ class TodoList extends Component {
     );
   }
 }
+const mapStateToProps = (state) => state;
 
-export default hot(module)(TodoList);
+export default hot(module)(connect(mapStateToProps, null)(TodoList));
