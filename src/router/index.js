@@ -11,10 +11,6 @@ class TodoList extends Component {
       inputValue: '',
       list: ['学React']
     };
-    // 否则指向undefined
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
-    // this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleChange(e) {
@@ -34,7 +30,7 @@ class TodoList extends Component {
   render() {
     return (
       <Fragment>
-        <form action="#">
+        <form action="" onSubmit={(e) => { e.preventDefault(); }}>
           <input
             type="text"
             value={this.state.inputValue}
