@@ -24,3 +24,9 @@ li{
 .fade-exit-done{
   opacity: 0;
 }
+.ant-list-item{
+  width: 100%;
+}
+.ant-list{
+  width: 500px;
+}

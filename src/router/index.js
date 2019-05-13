@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {hot} from 'react-hot-loader';
-import axios from 'axios';
+import 'antd/dist/antd.css';
+import {Input, Button, List, Typography} from 'antd';
 import '../style/style.css';
 import TodoItem from '../components/TodoItem';
-import App from '../components/App';
 
 class TodoList extends Component {
   constructor(props) {
@@ -22,11 +22,6 @@ class TodoList extends Component {
   handleChange(e) {
     this.setState({inputValue: e.target.value});
   }
-  componentDidMount() {
-    axios.get('http://127.0.0.1:5000/').then((res) => {
-      this.setState({list: this.state.list.concat(res.data)});
-    });
-  }
   handleClick() {
     this.setState({list: [...this.state.list, this.state.inputValue], inputValue: ''});
   }
@@ -40,15 +35,34 @@ class TodoList extends Component {
   render() {
     return (
       <Fragment>
-        <App />
-        <form action="#">
-          <input
+        <form
+          action="#"
+          style={{margin: '10px'}}
+        >
+          <Input
+            placeholder="Basic usage"
             type="text"
             value={this.state.inputValue}
             onChange={(e) => this.handleChange(e)}
+            style={{width: '300px', marginRight: '10px'}}
           />
-          <input type="submit" onClick={() => this.handleClick()} />
+          <Button
+            type="primary"
+            htmlType="submit"
+            onClick={() => this.handleClick()}
+          >
+            submit
+          </Button>
         </form>
+        <List
+          bordered
+          dataSource={this.state.list}
+          renderItem={item => (
+            <List.Item>
+              {item}
+            </List.Item>
+          )}
+        />
         <ul>
           {
             this.state.list.map((item, index) =>
