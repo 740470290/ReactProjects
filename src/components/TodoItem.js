@@ -1,11 +1,24 @@
 import React, {Component} from 'react';
 
 class TodoItem extends Component {
-  state = {
-  };
+  // constructor(props) {
+  //   super(props);
+  //   this.handleDelete = this.handleDelete.bind(this);
+  // }
+  handleDelete() {
+    this.props.handleDelete(this.props.index);
+  }
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    if (nextProps.item === this.props.item) {
+      return false;
+    }
+    return true;
+  }
   render() {
     return (
-      <div>1234</div>
+      <li>
+        {this.props.item}<a href="#" onClick={() => this.handleDelete()}>删除</a>
+      </li>
     );
   }
 }

@@ -1,16 +1,31 @@
 import React, {Component, Fragment} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {hot} from 'react-hot-loader';
-import {connect} from 'react-redux';
+import axios from 'axios';
 import '../style/style.css';
+import TodoItem from '../components/TodoItem';
+import App from '../components/App';
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
+    this.state = {
+      inputValue: '',
+      list: ['学React']
+    };
+    // 否则指向undefined
+    // this.handleChange = this.handleChange.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
+    // this.handleDelete = this.handleDelete.bind(this);
   }
+
   handleChange(e) {
-    this.setState({inputValue: this.refs.txt.value});
+    this.setState({inputValue: e.target.value});
+  }
+  componentDidMount() {
+    axios.get('http://127.0.0.1:5000/').then((res) => {
+      this.setState({list: this.state.list.concat(res.data)});
+    });
   }
   handleClick() {
     this.setState({list: [...this.state.list, this.state.inputValue], inputValue: ''});
@@ -25,27 +40,29 @@ class TodoList extends Component {
   render() {
     return (
       <Fragment>
-        <form action="" onSubmit={(e) => { e.preventDefault(); }}>
+        <App />
+        <form action="#">
           <input
             type="text"
-            value={this.props.inputValue}
+            value={this.state.inputValue}
             onChange={(e) => this.handleChange(e)}
-            ref="txt"
           />
           <input type="submit" onClick={() => this.handleClick()} />
         </form>
         <ul>
           {
-            this.props.list.map((item, index) =>
-              (<li key={index}>
-                {item}<a href="#" onClick={() => this.handleDelete(index)}>删除</a>
-              </li>))
+            this.state.list.map((item, index) =>
+              (<TodoItem
+                item={item}
+                index={index}
+                key={index}
+                handleDelete={this.handleDelete.bind(this)}
+              />))
           }
         </ul>
       </Fragment>
     );
   }
 }
-const mapStateToProps = (state) => state;
 
-export default hot(module)(connect(mapStateToProps, null)(TodoList));
+export default hot(module)(TodoList);
