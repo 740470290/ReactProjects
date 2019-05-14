@@ -5,32 +5,30 @@ import 'antd/dist/antd.css';
 import {Input, Button, List, Typography} from 'antd';
 import '../style/style.css';
 import TodoItem from '../components/TodoItem';
+import store from '../store';
+import {getInputChangeAction, getAddItemAction, getDeleteItemAction} from '../store/actionCreators';
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      inputValue: '',
-      list: ['学React']
-    };
-    // 否则指向undefined
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
-    // this.handleDelete = this.handleDelete.bind(this);
+    this.state = store.getState();
+    this.handleStoreChange = this.handleStoreChange.bind(this);
+    store.subscribe(this.handleStoreChange);
   }
-
+  handleStoreChange() {
+    this.setState(store.getState());
+  }
   handleChange(e) {
-    this.setState({inputValue: e.target.value});
+    const action = getInputChangeAction(e.target.value);
+    store.dispatch(action);
   }
   handleClick() {
-    this.setState({list: [...this.state.list, this.state.inputValue], inputValue: ''});
+    const action = getAddItemAction();
+    store.dispatch(action);
   }
   handleDelete(index) {
-    const list1 = [...this.state.list];
-    list1.splice(index, 1);
-    this.setState({
-      list: list1
-    });
+    const action = getDeleteItemAction(index);
+    store.dispatch(action);
   }
   render() {
     return (
@@ -38,6 +36,7 @@ class TodoList extends Component {
         <form
           action="#"
           style={{margin: '10px'}}
+          onSubmit={(e) => { e.preventDefault(); }}
         >
           <Input
             placeholder="Basic usage"

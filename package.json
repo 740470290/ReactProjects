@@ -19,7 +19,8 @@
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "react-swipeable-views": "^0.13.1",
-    "react-transition-group": "^4.0.1"
+    "react-transition-group": "^4.0.1",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
