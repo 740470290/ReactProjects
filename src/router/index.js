@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {hot} from 'react-hot-loader';
 import 'antd/dist/antd.css';
 import '../style/style.css';
-import {getInputChangeAction, getTodoList, getAddItemAction, getDeleteItemAction}
+import {getInputChangeAction, getAddItemAction, getDeleteItemAction, getInitList, initListAction}
   from '../store/actionCreators';
 import TodolistUI from './TodolistUI';
 import store from '../store';
@@ -17,7 +17,7 @@ class TodoList extends Component {
     store.subscribe(this.handleStoreChange);
   }
   componentDidMount() {
-    const action = getTodoList();
+    const action = getInitList();
     store.dispatch(action);
   }
 
