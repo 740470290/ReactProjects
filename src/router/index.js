@@ -1,50 +1,58 @@
 import React, {Component, Fragment} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {hot} from 'react-hot-loader';
-import 'antd/dist/antd.css';
+import {connect} from 'react-redux';
 import '../style/style.css';
-import {getInputChangeAction, getAddItemAction, getDeleteItemAction, getInitList, initListAction}
-  from '../store/actionCreators';
-import TodolistUI from './TodolistUI';
-import store from '../store';
 
 class TodoList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = store.getState();
-    this.handleStoreChange = this.handleStoreChange.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    store.subscribe(this.handleStoreChange);
-  }
-  componentDidMount() {
-    const action = getInitList();
-    store.dispatch(action);
-  }
-
-  handleStoreChange() {
-    this.setState(store.getState());
-  }
-  handleChange(e) {
-    const action = getInputChangeAction(e.target.value);
-    store.dispatch(action);
-  }
-  handleClick() {
-    const action = getAddItemAction();
-    store.dispatch(action);
-  }
-  handleDelete(index) {
-    const action = getDeleteItemAction(index);
-    store.dispatch(action);
-  }
   render() {
-    return (<TodolistUI
-      inputValue={this.state.inputValue}
-      handleChange={this.handleChange}
-      handleClick={this.handleClick}
-      handleDelete={this.handleDelete}
-      list={this.state.list}
-    />);
+    return (
+      <Fragment>
+        <div>
+          <input
+            type="text"
+            value={this.props.inputValue}
+            onChange={this.props.changeInputValue}
+          />
+          <button onClick={this.props.handleClick}>提交</button>
+        </div>
+        <ul>
+          {
+            this.props.list.map((item, index) =>
+              (<li
+                key={index}
+              >{item}<a href="#" onClick={() => this.props.handleDelete()}>删除</a></li>))
+          }
+        </ul>
+      </Fragment>
+    );
   }
 }
 
-export default hot(module)(TodoList);
+const mapStateToProps = (state) => state;
+const mapDispatchToProps = (dispatch) => ({
+  changeInputValue(e) {
+    const action = {
+      type: 'change_input_value',
+      value: e.target.value
+    };
+    dispatch(action);
+  },
+  handleClick() {
+    const action = {
+      type: 'add_item'
+    };
+    dispatch(action);
+  },
+  handleDelete(index) {
+    const action = {
+      type: 'delete_item',
+      index
+    };
+    dispatch(action);
+  }
+});
+
+
+export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(TodoList));
+
