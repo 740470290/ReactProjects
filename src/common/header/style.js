@@ -3,10 +3,9 @@ import logoPic from '../../statics/logo.png';
 
 export const HeaderWrapper = styled.div`
   height: 56px;
-  position: relative;
   border-bottom: 1px solid #f0f0f0;
 `;
-export const Logo = styled.a`
+export const Logo = styled.div`
   position: absolute;
   height: 56px;
   top: 0;
@@ -34,6 +33,7 @@ export const NavItem = styled.div`
   &.right {
     float: right;
     color: #969696;
+    cursor: pointer;
   }
   &.active {
     color: #ea6f5a;
@@ -115,6 +115,7 @@ export const SearchInfo = styled.div`
   left: 0;
   display: none;
   top: 56px;
+  background: #fff;
   width: 240px;
   padding: 0 20px;
   box-shadow: 0 0 8px rgba(0,0,0,0.2);

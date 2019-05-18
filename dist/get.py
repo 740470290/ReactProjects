@@ -19,6 +19,9 @@ def home(name):
 def login():
   response={"success": True}
   return jsonify(response)
+@app.route('/', methods=['GET', 'POST'])
+def index():
+  return render_template('index.html')
 
 # 启动运行
 if __name__ == '__main__':

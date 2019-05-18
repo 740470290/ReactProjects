@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 
-class Writter extends Component {
+class Writter extends PureComponent {
   render() {
     return (
-      <div>Writter</div>
+      <div className="writter">Writter</div>
     );
   }
 }

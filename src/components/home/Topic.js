@@ -1,17 +1,26 @@
-import React, {Component} from 'react';
-import topic from '../../statics/topic.jpg';
+import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
+import topic from '~/statics/topic.jpg';
 
-class Topic extends Component {
+class Topic extends PureComponent {
   render() {
     return (
       <div className="topic">
-        <div className="topicItem">
-          <img src={topic} alt="" />
-          社会热点
-        </div>
+        {
+          this.props.list.map((item) => (
+            <div className="topicItem" key={item.get('id')}>
+              <img src={item.get('imgUrl')} alt="" />
+              {item.get('title')}
+            </div>
+          ))
+        }
       </div>
     );
   }
 }
 
-export default Topic;
+const mapState = (state) => ({
+  list: state.getIn(['home', 'topicList'])
+});
+
+export default connect(mapState, null)(Topic);
